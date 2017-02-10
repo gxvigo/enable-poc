@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<definitions name="CheckStock"
+             targetNamespace="http://example.com/warehouse.wsdl"
+             xmlns:tns="http://example.com/warehouse.wsdl"
+             xmlns:xsd1="http://example.com/warehouse.xsd"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+  <types>
+    <schema targetNamespace="http://example.com/warehouse.xsd"
+            xmlns="http://www.w3.org/2001/XMLSchema">
+                  <element name="CheckStockRequest">
+        <complexType>
+          <all>
+            <element name="product" type="string"/>
+          </all>
+        </complexType>
+      </element>
+      <element name="CheckStock">
+         <complexType>
+           <all>
+             <element name="available" type="boolean"/>
+           </all>
+         </complexType>
+      </element>
+    </schema>
+  </types>
+
+  <message name="GetLastCheckStockInput">
+    <part name="body" element="xsd1:CheckStockRequest"/>
+  </message>
+
+  <message name="GetLastCheckStockOutput">
+    <part name="body" element="xsd1:CheckStock"/>
+  </message>
+
+  <portType name="CheckStockPortType">
+    <operation name="GetLastCheckStock">
+      <input message="tns:GetLastCheckStockInput"/>
+      <output message="tns:GetLastCheckStockOutput"/>
+    </operation>
+  </portType>
+
+  <binding name="CheckStockSoapBinding" type="tns:CheckStockPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="GetLastCheckStock">
+      <soap:operation soapAction="http://example.com/GetLastCheckStock"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="CheckStockService">
+    <documentation>My first service</documentation>
+    <port name="CheckStockPort" binding="tns:CheckStockSoapBinding">
+      <soap:address location="http://localhost"/>
+    </port>
+  </service>
+
+</definitions>

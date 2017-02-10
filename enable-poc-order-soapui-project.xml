@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="6c0821b7-7178-4925-8170-a062e69fd3ba" activeEnvironment="Default" name="enable-poc-order" resourceRoot="" soapui-version="5.3.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="ce5fa5de-3a3a-4f14-9f92-95ff73123229" wsaVersion="NONE" name="CheckStockSoapBinding" type="wsdl" bindingName="{http://example.com/warehouse.wsdl}CheckStockSoapBinding" soapVersion="1_1" anonymous="optional" definition="file:/Users/giovanni/Downloads/warehouse.wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="file:/Users/giovanni/Downloads/warehouse.wsdl"><con:part><con:url>file:/Users/giovanni/Downloads/warehouse.wsdl</con:url><con:content><![CDATA[<definitions name="CheckStock" targetNamespace="http://example.com/warehouse.wsdl" xmlns:tns="http://example.com/warehouse.wsdl" xmlns:xsd1="http://example.com/warehouse.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <schema targetNamespace="http://example.com/warehouse.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="CheckStockRequest">
+        <complexType>
+          <all>
+            <element name="product" type="string"/>
+          </all>
+        </complexType>
+      </element>
+      <element name="CheckStock">
+        <complexType>
+          <all>
+            <element name="available" type="boolean"/>
+          </all>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="GetLastCheckStockInput">
+    <part name="body" element="xsd1:CheckStockRequest"/>
+  </message>
+  <message name="GetLastCheckStockOutput">
+    <part name="body" element="xsd1:CheckStock"/>
+  </message>
+  <portType name="CheckStockPortType">
+    <operation name="GetLastCheckStock">
+      <input message="tns:GetLastCheckStockInput"/>
+      <output message="tns:GetLastCheckStockOutput"/>
+    </operation>
+  </portType>
+  <binding name="CheckStockSoapBinding" type="tns:CheckStockPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="GetLastCheckStock">
+      <soap:operation soapAction="http://example.com/GetLastCheckStock"/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="CheckStockService">
+    <documentation>My first service</documentation>
+    <port name="CheckStockPort" binding="tns:CheckStockSoapBinding">
+      <soap:address location="http://localhost"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost</con:endpoint></con:endpoints><con:operation id="dd498cd4-1ea8-440f-abc4-8db24800bdb1" isOneWay="false" action="http://example.com/GetLastCheckStock" name="GetLastCheckStock" bindingOperationName="GetLastCheckStock" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="f1738701-2fa1-4af4-a5ff-26bb5d90af35" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8081</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:war="http://example.com/warehouse.xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <war:CheckStockRequest>
+        <war:product>fiber100</war:product>
+      </war:CheckStockRequest>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/GetLastCheckStock"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:mockService id="4a12b839-6ae7-46c0-ac2f-a965b73401f0" port="8081" path="/" host="localhost" name="MockService 1" bindToHostOnly="false" docroot=""><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.mock.WsdlMockService@require-soap-action">false</con:setting></con:settings><con:properties/><con:mockOperation name="GetLastCheckStock" id="86487faa-9b31-4a4d-b4ae-f4d86f40bbed" interface="CheckStockSoapBinding" operation="GetLastCheckStock"><con:settings/><con:defaultResponse>Response 1</con:defaultResponse><con:dispatchStyle>SEQUENCE</con:dispatchStyle><con:response name="Response 1" id="62c77fe6-5984-44dd-a226-1d91aa68fdfa" httpResponseStatus="200" encoding="UTF-8"><con:settings/><con:responseContent><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:war="http://example.com/warehouse.xsd">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <war:CheckStock>
+      	<war:available>true</war:available>
+      </war:CheckStock>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:responseContent><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://example.com/GetLastCheckStock"/></con:response><con:dispatchConfig/></con:mockOperation></con:mockService><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/></con:soapui-project>

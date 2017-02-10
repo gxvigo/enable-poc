@@ -1,0 +1,80 @@
+swagger: '2.0'
+info:
+  x-ibm-name: order
+  title: order
+  version: 1.0.0
+schemes:
+  - https
+host: $(catalog.host)
+basePath: /api
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+security:
+  - {}
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+      - javascript:
+          title: javascript
+          version: 1.0.0
+          source: |-
+            //var apic = require('./apim.custom.js');
+            //apic.console.debug('Hello');
+      - invoke:
+          target-url: >-
+            https://192.168.225.184:9443/rest/bpm/wle/v1/process?action=$(request.parameters.action)&bpdId=$(request.parameters.bpdId)&branchId=$(request.parameters.branchId)&params=$(request.parameters.params)
+paths:
+  /order:
+    post:
+      responses:
+        '200':
+          description: 200 OK
+      parameters:
+        - name: action
+          type: string
+          required: true
+          in: query
+          description: start
+        - name: bpdId
+          type: string
+          required: true
+          in: query
+          description: 25.c1206b63-1e94-4aaa-9dc1-76363270b441
+        - name: branchId
+          type: string
+          required: true
+          in: query
+          description: 2066.d0e91cc6-a515-4965-ba6f-516bdbddcb00
+        - name: params
+          type: string
+          required: false
+          in: query
+          description: >-
+            { "ticketDetails" : {         "name": "Giovanni Vigorelli",        
+            "DOB": "1974-05-02T05:07:13Z",         "driverLicense":
+            "e345234",         "registration": "hdd843",         "ticketType":
+            "Speeding",         "date": "2016-05-02T05:07:13Z",        
+            "location": "34 Queen St, Auckland",         "ticketId":
+            "12345",         "officer": "Oscar Nice"     }}
+        - name: parts
+          type: string
+          required: true
+          in: query
+          description: all
+        - name: Authorization
+          type: string
+          required: true
+          in: header
+definitions: {}
+tags: []

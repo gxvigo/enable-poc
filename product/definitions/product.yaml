@@ -1,0 +1,138 @@
+paths:
+  /products:
+    post:
+      tags:
+        - product
+      summary: Create a new instance of the model and persist it into the data source.
+      operationId: product.create
+      parameters:
+        - name: data
+          in: body
+          description: Model instance data
+          required: false
+          schema:
+            description: Model instance data
+            $ref: '#/definitions/product'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/product'
+      deprecated: false
+    get:
+      tags:
+        - product
+      summary: Find all instances of the model matched by filter from the data source.
+      operationId: product.find
+      parameters:
+        - name: filter
+          in: query
+          description: 'Filter defining fields, where, include, order, offset, and limit'
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/product'
+      deprecated: false
+  '/products/{id}':
+    get:
+      tags:
+        - product
+      summary: 'Find a model instance by {{id}} from the data source.'
+      operationId: product.findById
+      parameters:
+        - name: id
+          in: path
+          description: Model id
+          required: true
+          type: string
+          format: JSON
+        - name: filter
+          in: query
+          description: Filter defining fields and include
+          required: false
+          type: string
+          format: JSON
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/product'
+      deprecated: false
+definitions:
+  product:
+    properties:
+      available:
+        type: boolean
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+        format: double
+      uid:
+        type: string
+    required:
+      - available
+      - description
+      - name
+      - price
+      - uid
+    additionalProperties: false
+basePath: /api
+swagger: '2.0'
+info:
+  x-ibm-name: product
+  version: 1.0.0
+  title: product
+  description: 'Host: $(catalog.host) , 127.0.0.1:4002'
+schemes:
+  - https
+host: $(catalog.host)
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+  clientSecretHeader:
+    in: header
+    name: X-IBM-Client-Secret
+    type: apiKey
+security:
+  - {}
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  catalogs:
+    apic-dev:
+      properties:
+        runtime-url: $(TARGET_URL)
+    sb:
+      properties:
+        runtime-url: 'http://localhost:4001'
+  assembly:
+    execute:
+      - set-variable:
+          title: isLoopback
+          actions:
+            - set: isLoopback
+              value: true
+          version: 1.0.0
+      - invoke:
+          target-url: 'http://127.0.0.1:8080$(request.path)$(request.search)'
+          description: >-
+            loopback: $(runtime-url)$(request.path)$(request.search) ,
+            http://127.0.0.1:8080/
+  gateway: micro-gateway

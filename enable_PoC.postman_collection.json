@@ -1,0 +1,55 @@
+{
+	"variables": [],
+	"info": {
+		"name": "enable_PoC",
+		"_postman_id": "3927ce00-65cc-f843-6fab-6e99416a71ea",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "IBM BPM - start process 'OrderProcessingSimplified'",
+			"request": {
+				"url": "https://192.168.225.184:9443/rest/bpm/wle/v1/process?action=start&bpdId=25.9d37c4a7-83eb-48e6-861e-c99b0e242be5&branchId=2063.7572a600-ccfa-4fd2-b0ca-a4515b9c47e7&params={\"order\":{\"product\": \"fiber100\",\"clientName\": \"Giovanni\",\"address\":\"Auckland\"}}",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "APIC - start process 'OrderProcessingSimplified'",
+			"request": {
+				"url": "https://localhost:4002/api/order?action=start&bpdId=25.9d37c4a7-83eb-48e6-861e-c99b0e242be5&branchId=2063.7572a600-ccfa-4fd2-b0ca-a4515b9c47e7&params={\"order\":{\"product\": \"fiber100\",\"clientName\": \"Giovanni\",\"address\":\"Auckland\"}}",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46YWRtaW4=",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "action",
+							"value": "start",
+							"type": "text",
+							"enabled": true
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

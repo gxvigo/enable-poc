@@ -1,0 +1,69 @@
+swagger: '2.0'
+info:
+  x-ibm-name: orderfullfilment
+  title: orderFullfilment
+  version: 1.0.0
+schemes:
+  - https
+host: $(catalog.host)
+basePath: /orderfullfilment
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  clientIdHeader:
+    type: apiKey
+    in: header
+    name: X-IBM-Client-Id
+security:
+  - clientIdHeader: []
+x-ibm-configuration:
+  testable: true
+  enforced: true
+  cors:
+    enabled: true
+  assembly:
+    execute:
+      - set-variable:
+          title: set-variable
+          actions:
+            - set: response
+              value: OrderAccepted
+          version: 1.0.0
+      - javascript:
+          title: javascript
+          version: 1.0.0
+          source: response.body = "completed"
+paths:
+  /order:
+    post:
+      responses:
+        '200':
+          description: 200 OK
+          schema:
+            type: string
+      parameters:
+        - name: address
+          type: string
+          required: false
+          in: formData
+        - name: customerName
+          type: string
+          required: false
+          in: formData
+        - name: product
+          type: string
+          required: false
+          in: formData
+definitions:
+  order:
+    properties:
+      address:
+        type: string
+      clientName:
+        type: string
+      product:
+        type: string
+    additionalProperties: false
+tags: []

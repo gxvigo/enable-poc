@@ -1,0 +1,6 @@
+{
+  "inMemory": {
+    "name": "inMemory",
+    "connector": "memory"
+  }
+}
